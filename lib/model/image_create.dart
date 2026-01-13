@@ -6,14 +6,15 @@ class ImageCreate extends StatelessWidget {
   final String email;
   final String phone;
   final VoidCallback onDelete;
-
+  final VoidCallback onEdit;
 
   const ImageCreate({
     super.key,
     required this.name,
     required this.email,
     required this.phone,
-    required this.onDelete
+    required this.onDelete,
+    required this.onEdit,
   });
 
   @override
@@ -21,13 +22,14 @@ class ImageCreate extends StatelessWidget {
     var size = MediaQuery.of(context).size;
 
     return Container(
-      width: size.width * 0.45,
-      height: size.height * 0.25,
+      width: size.width,
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: AppColor.lastColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _infoRow(
             icon: Icons.drive_file_rename_outline_outlined,
@@ -41,50 +43,80 @@ class ImageCreate extends StatelessWidget {
             icon: Icons.phone_in_talk,
             text: phone,
           ),
-          Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextButton(
-              onPressed: onDelete,
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.red,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.delete, color: Colors.white, size: 25),
-                  SizedBox(width: 5),
-                  Text(
-                    'Delete',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
+          const SizedBox(height: 10),
+
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: onEdit,
+                  style: TextButton.styleFrom(
+                    backgroundColor: AppColor.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                ],
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.edit, color: Colors.white, size: 22),
+                      SizedBox(width: 6),
+                      Text(
+                        'Edit',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: TextButton(
+                  onPressed: onDelete,
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.delete, color: Colors.white, size: 22),
+                      SizedBox(width: 6),
+                      Text(
+                        'Delete',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 
-  /// Widget reusable لكل صف بيانات
   Widget _infoRow({
     required IconData icon,
     required String text,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Icon(icon, size: 30, color: AppColor.primaryColor),
-          const SizedBox(width: 5),
+          Icon(icon, size: 28, color: AppColor.primaryColor),
+          const SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
@@ -93,7 +125,7 @@ class ImageCreate extends StatelessWidget {
               style: TextStyle(
                 color: AppColor.primaryColor,
                 fontWeight: FontWeight.w500,
-                fontSize: 18,
+                fontSize: 17,
               ),
             ),
           ),
